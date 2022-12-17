@@ -1,8 +1,9 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/home/Home";
+import  Home  from "./pages/home/Home";
 import Auth from "./pages/Auth/Auth";
-import Profile from "./pages/Profile/Profile";
+// import Chat from "./pages/Chat/Chat";
+// import Profile from "./pages/Profile/Profile";
 import { useSelector } from "react-redux";
 
 
@@ -23,34 +24,17 @@ function App() {
       <div className="blur" style={{ top: "72%", right: "-8rem" }}></div>
       <Routes>
         <Route
-          path="/"
-          element={user ? <Navigate to="home" /> : <Navigate to="auth" />}
+          path='/'
+          element={user ? <Navigate to="home" /> : <Navigate to= 'auth' />}
         />
         <Route
-          path="/home"
-          element={user ? <Home /> : <Navigate to="../auth" />}
+          path= '/home'
+          element={user ? <Home /> : <Navigate to= '../auth' />}
         />
         <Route
-          path="/auth"
-          element={user ? <Navigate to="../home" /> : <Auth />}
+          path='/auth'
+          element={user ? <Navigate to= '../home' /> : <Auth />}
         />
-        <Route
-          path="/profile/:id"
-          element={user ? <Profile /> : <Navigate to="../auth" />}
-        />
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: "1rem" }}>
-              <p>There's nothing here!</p>
-            </main>
-          }
-        />
-
-        {/* <Route
-          path="/chat"
-          element={user ? <Chat /> : <Navigate to="../auth" />}
-        /> */}
       </Routes>
     </div>
   );

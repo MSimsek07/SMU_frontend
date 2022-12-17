@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./Auth.css";
 import Logo from "../../img/logo.png";
 import { logIn, signUp } from "../../actions/AuthAction";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux"
 
 const Auth = () => {
   const initialState = {
@@ -15,22 +15,25 @@ const Auth = () => {
   };
   const loading = useSelector((state) => state.authReducer.loading);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch= useDispatch();
   const [isSignUp, setIsSignUp] = useState(true);
 
-  const [data, setData] = useState(initialState);
+  const [data, setData] = useState({firstname: "", lastname: "",password: "", confirmPass: "", username: ""});
 
    const [confirmPass, setConfirmPass] = useState(true);
 
-  // const dispatch = useDispatch()
-
   // Reset Form
   const resetForm = () => {
-    setData(initialState);
-    setConfirmPass(confirmPass);
+    setData({
+    firstname: "",
+    lastname: "",
+    password: "",
+    confirmpass: "",
+    username: "",
+  });
+    setConfirmPass(true);
   };
 
-  // handle Change in input
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -41,10 +44,10 @@ const Auth = () => {
     e.preventDefault();
     if (isSignUp) {
       data.password === data.confirmpass
-        ? dispatch(signUp(data, navigate))
+        ? dispatch(signUp(data))
         : setConfirmPass(false);
     } else {
-      dispatch(logIn(data, navigate));
+      dispatch(logIn(data));
     }
   };
 
@@ -118,6 +121,7 @@ const Auth = () => {
                 name="confirmpass"
                 placeholder="Confirm Password"
                 onChange={handleChange}
+                value={data.confirmpass}
               />
             )}
           </div>
@@ -131,18 +135,18 @@ const Auth = () => {
               display: confirmPass ? "none" : "block",
             }}
           >
-            *Confirm password is not same
+            * Şifreler aynı değil
           </span>
           <div>
-            <span
-              style={{
-                fontSize: "12px",
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
-              onClick={() => {
-                resetForm();
-                setIsSignUp((prev) => !prev);
+              <span
+                style={{
+                  fontSize: "12px",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+                onClick={() => {
+                  setIsSignUp((prev) => !prev); resetForm()
+                
               }}
             >
               {isSignUp
